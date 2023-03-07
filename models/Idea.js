@@ -16,12 +16,14 @@ const IdeaSchema = new mongoose.Schema({
     rerquired: true,
     autopopulate: true,
   },
-  comments: {
-    type: Schema.Types.ObjectId,
-    ref: "Comment",
-    required: true,
-    autopopulate: true,
-  },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "comment",
+      required: true,
+      autopopulate: true,
+    },
+  ],
 });
 
 //IdeaSchema.plugin(import 'mongoose-autopopulate')

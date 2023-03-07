@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import mongoosePopulate from "mongoose-autopopulate";
 
 const CommentSchema = new mongoose.Schema({
   comment: {
@@ -16,5 +17,5 @@ const CommentSchema = new mongoose.Schema({
   },
 });
 
-//CommentSchema.plugin(import 'mongoose-autopopulate')
+CommentSchema.plugin(mongoosePopulate);
 export default mongoose.model("Comment", CommentSchema);
