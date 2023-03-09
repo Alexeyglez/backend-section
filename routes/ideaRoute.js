@@ -13,7 +13,9 @@ import {
   upvoteIdea,
 } from "../controllers/ideaController.js";
 
-router.route("").get(getAllIdeas).post(createIdea);
+import { authenticateUser } from "../middlewares/authenticateUser.js";
+
+router.route("").get(getAllIdeas).post(authenticateUser, createIdea);
 router.route("/:id/all").get(getUserIdeas);
 router.route("/:id").get(getIdea).patch(updateIdea).delete(deleteIdea);
 router.route("/:id/upvote").post(upvoteIdea);

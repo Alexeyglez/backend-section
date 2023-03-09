@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const IdeaSchema = new mongoose.Schema({
   idea: {
@@ -11,14 +11,14 @@ const IdeaSchema = new mongoose.Schema({
   upvotes: [{ type: Boolean }],
   downvotes: [{ type: Boolean }],
   author: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: "User",
     rerquired: true,
     autopopulate: true,
   },
   comments: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "comment",
       required: true,
       autopopulate: true,

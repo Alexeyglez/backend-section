@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import mongoosePopulate from "mongoose-autopopulate";
 
 const CommentSchema = new mongoose.Schema({
@@ -10,7 +10,7 @@ const CommentSchema = new mongoose.Schema({
     type: String,
   },
   author: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
     autopopulate: true,
