@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePopulate from "mongoose-autopopulate";
 
 const IdeaSchema = new mongoose.Schema({
   idea: {
@@ -19,13 +20,12 @@ const IdeaSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Types.ObjectId,
-      ref: "comment",
+      ref: "Comment",
       required: true,
       autopopulate: true,
     },
   ],
 });
 
-//IdeaSchema.plugin(import 'mongoose-autopopulate')
-
+IdeaSchema.plugin(mongoosePopulate);
 export default mongoose.model("Idea", IdeaSchema);

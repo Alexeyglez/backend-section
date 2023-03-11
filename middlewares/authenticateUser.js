@@ -3,8 +3,8 @@ import { isTokenValid } from "../utils/index.js";
 
 export const authenticateUser = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader || authHeader.startsWith("Bearer")) {
-    throw new UnAuthenticatedError("Authentication invalid");
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    throw new UnAuthenticatedError("Authentication invalid as");
   }
   const token = authHeader.split(" ")[1];
   try {

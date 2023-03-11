@@ -13,7 +13,7 @@ export const getUser = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   const users = await User.find().select("-password");
-  res.status(StatusCodes.OK).json({ users });
+  res.status(StatusCodes.OK).json({ users, count: users.length });
 };
 
 export const updateUser = async (req, res) => {

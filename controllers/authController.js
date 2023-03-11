@@ -22,7 +22,7 @@ export const signIn = async (req, res) => {
   if (!username || !password) {
     throw new BadRequestError("Please provide all values");
   }
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username }).select("+password");
   if (!user) {
     throw new UnAuthenticatedError("Invalid credentials");
   }

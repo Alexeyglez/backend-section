@@ -8,9 +8,20 @@ import {
   getComment,
   getIdeaComments,
   updateComment,
+  getAllComments,
 } from "../controllers/commentController.js";
 
-router.route("/:id").get(getComment).patch(updateComment).delete(deleteComment);
-router.route("/:ideaId").post(createComment).get(getIdeaComments);
+import { authenticateUser } from "../middlewares/authenticateUser.js";
+
+router.route("").get(getAllComments);
+router
+  .route("/:id/unique")
+  .get(getComment)
+  .patch(updateComment)
+  .delete(deleteComment);
+router
+  .route("/:ideaId")
+  .post(authenticateUser, createComment)
+  .get(authenticateUser, getIdeaComments);
 
 export default router;

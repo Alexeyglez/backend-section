@@ -26,10 +26,10 @@ if (process.env.NODE_ENV !== "producction") {
 app.use(express.json());
 
 app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/user", userRoute);
+app.use("/api/v1/users", userRoute);
 app.use("/api/v1/home", homeRoute);
-app.use("/api/v1/idea", ideaRoute);
-app.use("/api/v1/comment", commentRoute);
+app.use("/api/v1/ideas", ideaRoute);
+app.use("/api/v1/comments", commentRoute);
 
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);

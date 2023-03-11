@@ -6,6 +6,5 @@ export const createJWT = ({ payload }) => {
   });
 };
 
-export const isTokenValid = ({ token }) => {
+export const isTokenValid = ({ token }) =>
   jwt.verify(token, process.env.JWT_SECRET);
-};

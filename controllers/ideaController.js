@@ -13,13 +13,13 @@ export const getIdea = async (req, res) => {
 
 export const getAllIdeas = async (req, res) => {
   const ideas = await Idea.find();
-  res.status(StatusCodes.OK).json({ ideas });
+  res.status(StatusCodes.OK).json({ ideas, count: ideas.length });
 };
 
 export const createIdea = async (req, res) => {
-  const { body } = req;
-  const idea = await Idea.create({ body });
-  res.status(StatusCodes.CREATED).json({ idea });
+  const { idea, description, author, comments } = req.body;
+  const ideaw = await Idea.create({ idea, description, author, comments });
+  res.status(StatusCodes.CREATED).json({ ideaw });
 };
 
 export const updateIdea = async (req, res) => {
@@ -58,6 +58,7 @@ export const upvoteIdea = async (req, res) => {
     throw new NotFoundError(`No found Idea with id ${ideaId}`);
   }
   idea.upvotes.push(true);
+  idea.save();
   res.status(StatusCodes.OK).json({ idea });
 };
 
@@ -68,5 +69,6 @@ export const downvoteIdea = async (req, res) => {
     throw new NotFoundError(`No found Idea with id ${ideaId}`);
   }
   idea.downvotes.push(true);
+  idea.save();
   res.status(StatusCodes.OK).json({ idea });
 };

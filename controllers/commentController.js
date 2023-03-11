@@ -3,11 +3,16 @@ import Comment from "../models/Comment.js";
 import { NotFoundError, BadRequestError } from "../errors/index.js";
 import Idea from "../models/Idea.js";
 
+export const getAllComments = async (req, res) => {
+  const comments = await Comment.find();
+  res.status(StatusCodes.OK).json({ comments, count: comments.length });
+};
+
 export const getComment = async (req, res) => {
-  const { id: commentId } = req.parmas;
+  const { id: commentId } = req.params;
   const comment = await Comment.findOne({ _id: commentId });
   if (!comment) {
-    throw new NotFoundError(`NO found Comment with id ${commentId}`);
+    throw new NotFoundError(`No found Comment with id ${commentId}`);
   }
   res.status(StatusCodes.OK).json({ comment });
 };
@@ -36,24 +41,35 @@ export const deleteComment = async (req, res) => {
 };
 
 export const getIdeaComments = async (req, res) => {
-  const { id: ideaId } = req.parmas;
+  const { ideaId } = req.params;
   const idea = await Idea.findOne({ _id: ideaId });
   if (!idea) {
     throw new NotFoundError(`No found Idea with id ${ideaId}`);
   }
+  console.log(idea.comments);
   const { comments } = idea;
   res.status(StatusCodes.OK).json({ comments });
 };
 
 export const createComment = async (req, res) => {
-  const { body } = req;
-  const { id: ideaId } = req.parmas;
-  const { id: userId } = req.user;
+  const { comment, description } = req.body;
+  const { ideaId } = req.params;
+  const { userId: author } = req.user;
   const idea = await Idea.findOne({ _id: ideaId });
   if (!idea) {
     throw new NotFoundError(`No found Idea with id ${ideaId}`);
   }
-  const comment = await Comment.create(body, ideaId, userId);
-  idea.comments.push(comment._id);
-  res.status(StatusCodes.CREATED).json({ comment });
+  const commentNew = await Comment.create({
+    comment,
+    description,
+    author,
+  });
+  idea.comments.push(commentNew._id);
+  /*await Idea.findOneAndUpdate(
+    { _id: ideaId },
+    { comments: idea.comments },
+    { new: true }
+  );*/
+  await idea.save();
+  res.status(StatusCodes.CREATED).json({ commentNew });
 };
